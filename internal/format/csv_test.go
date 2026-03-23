@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pakhomovld/pp/internal/detect"
+	"github.com/pakhomovld/ppp/internal/detect"
 )
 
 func TestCSVFormatter_NoColor(t *testing.T) {

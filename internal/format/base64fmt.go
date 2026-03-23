@@ -8,8 +8,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/pakhomovld/pp/internal/color"
-	"github.com/pakhomovld/pp/internal/detect"
+	"github.com/pakhomovld/ppp/internal/color"
+	"github.com/pakhomovld/ppp/internal/detect"
 )
 
 // Base64Formatter decodes base64 and recursively detects/formats the decoded content.

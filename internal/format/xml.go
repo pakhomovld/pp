@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/ppp/internal/color"
 )
 
 // XMLFormatter indents and colorizes XML/HTML.

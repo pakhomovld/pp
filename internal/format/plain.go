@@ -3,7 +3,7 @@ package format
 import (
 	"io"
 
-	"github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/ppp/internal/color"
 )
 
 // PlainFormatter passes input through without modification.

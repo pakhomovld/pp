@@ -1,4 +1,4 @@
-module github.com/pakhomovld/pp
+module github.com/pakhomovld/ppp
 
 go 1.25.2
 

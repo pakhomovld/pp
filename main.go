@@ -7,11 +7,11 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/pakhomovld/pp/cmd"
-	ppcolor "github.com/pakhomovld/pp/internal/color"
-	"github.com/pakhomovld/pp/internal/detect"
-	"github.com/pakhomovld/pp/internal/format"
-	"github.com/pakhomovld/pp/internal/sniff"
+	"github.com/pakhomovld/ppp/cmd"
+	ppcolor "github.com/pakhomovld/ppp/internal/color"
+	"github.com/pakhomovld/ppp/internal/detect"
+	"github.com/pakhomovld/ppp/internal/format"
+	"github.com/pakhomovld/ppp/internal/sniff"
 )
 
 func main() {

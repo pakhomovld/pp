@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/ppp/internal/color"
 )
 
 var (

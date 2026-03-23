@@ -38,10 +38,8 @@ brew install pakhomovld/tap/ppp
 **Go:**
 
 ```sh
-go install github.com/pakhomovld/pp@latest
+go install github.com/pakhomovld/ppp@latest
 ```
-
-The module path is `pp`; the binary is `ppp` (one more `p` for *pretty*).
 
 **Binary:** Download from [GitHub Releases](https://github.com/pakhomovld/ppp/releases).
 

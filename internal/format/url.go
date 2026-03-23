@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/ppp/internal/color"
 )
 
 // URLFormatter decodes URL-encoded query strings and displays them as a table.
