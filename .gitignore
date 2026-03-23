@@ -1,0 +1,11 @@
+# Binary
+pp
+pp.exe
+
+# Go
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
