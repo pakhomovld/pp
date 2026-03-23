@@ -4,6 +4,7 @@ package detect
 type Format string
 
 const (
+	NDJSON    Format = "ndjson"
 	JSON      Format = "json"
 	YAML      Format = "yaml"
 	CSV       Format = "csv"
@@ -38,6 +39,7 @@ func Detect(sample []byte) Result {
 
 	detectors := []Detector{
 		&JWTDetector{},
+		&NDJSONDetector{},
 		&JSONDetector{},
 		&XMLDetector{},
 		&YAMLDetector{},

@@ -15,12 +15,13 @@ Universal pipe pretty-printer. One command, any format.
 | Format | Detection | Output |
 |--------|-----------|--------|
 | JSON | `{` or `[` prefix + valid parse | Indented + colored |
+| NDJSON/JSONL | Multiple JSON objects, one per line | Each object indented |
 | YAML | `---` separator or `key: value` lines | Colored keys/values |
 | CSV/TSV | Consistent delimiter counts | Aligned table |
 | XML | `<` prefix, `<?xml` declaration | Indented + colored tags |
 | HTML | `<!DOCTYPE html>` or `<html>` | Indented + colored |
 | TOML | `[section]` + `key = value` | Colored sections/keys |
-| Log lines | Timestamps + level patterns | Colorized levels |
+| Log lines | Timestamps + level patterns | Colorized levels + embedded JSON formatted |
 | JWT | Three base64url segments with `"alg"` header | Decoded header + payload |
 | Base64 | Valid charset + decodable to UTF-8 | Decoded + inner format detected |
 | URL-encoded | `key=value&key=value` | Decoded key-value table |
@@ -127,7 +128,7 @@ Color is automatically disabled when:
 |------|-----------|
 | `jq` | JSON only. Must know it's JSON before piping. |
 | `yq` | YAML only. |
-| `bat` | Syntax highlighting only — doesn't restructure, reindent, or decode. |
+| `bat` | Syntax highlighting only — if JSON is minified on one line, bat leaves it that way. `ppp` parses and reformats: re-indents JSON, decodes JWTs, renders CSV as aligned tables, formats JSON inside log lines. |
 | `column -t` | Tables only. No auto-detection. |
 | `xmllint` | XML only. No color. |
 | `base64 -d` | Decodes but doesn't format the result. |
@@ -139,15 +140,16 @@ Color is automatically disabled when:
 `ppp` reads the first 8KB of stdin and runs format detectors in priority order:
 
 1. **JWT** — three dot-separated base64url segments
-2. **JSON** — starts with `{` or `[`, valid parse
-3. **XML/HTML** — starts with `<`
-4. **YAML** — `---` or `key: value` patterns
-5. **TOML** — `[section]` headers + `key = value`
-6. **CSV/TSV** — consistent delimiter counts across lines
-7. **URL-encoded** — `key=value&key=value` pattern
-8. **Log lines** — timestamp and level patterns
-9. **Base64** — valid charset, decodes to UTF-8
-10. **Plain text** — fallback, passes through unchanged
+2. **NDJSON** — multiple `{`-starting lines, each valid JSON
+3. **JSON** — starts with `{` or `[`, valid parse
+4. **XML/HTML** — starts with `<`
+5. **YAML** — `---` or `key: value` patterns
+6. **TOML** — `[section]` headers + `key = value`
+7. **CSV/TSV** — consistent delimiter counts across lines
+8. **URL-encoded** — `key=value&key=value` pattern
+9. **Log lines** — timestamp and level patterns
+10. **Base64** — valid charset, decodes to UTF-8
+11. **Plain text** — fallback, passes through unchanged
 
 Each detector returns a confidence score (High/Medium/Low/None). Highest confidence wins. On ties, earlier detector wins.
 
@@ -162,6 +164,13 @@ Each detector returns a confidence score (High/Medium/Low/None). Highest confide
 | Whitespace-only | Plain | Empty after trim |
 
 Use `--inspect` to see what `ppp` detected and how confident it is.
+
+## Roadmap
+
+- Protobuf (with `.proto` schema)
+- MessagePack
+- HCL (Terraform configs)
+- SQL (query formatting)
 
 ## Build from Source
 

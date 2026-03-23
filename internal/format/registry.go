@@ -5,6 +5,8 @@ import "github.com/pakhomovld/ppp/internal/detect"
 // ForFormat returns the appropriate formatter for the given format.
 func ForFormat(f detect.Format) Formatter {
 	switch f {
+	case detect.NDJSON:
+		return &NDJSONFormatter{}
 	case detect.JSON:
 		return &JSONFormatter{}
 	case detect.YAML:

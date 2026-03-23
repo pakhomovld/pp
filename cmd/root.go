@@ -36,6 +36,7 @@ Flags:
 
 Supported formats:
   json        JSON objects and arrays
+  ndjson      Newline-delimited JSON (one object per line)
   yaml        YAML documents
   csv         Comma-separated values
   tsv         Tab-separated values
@@ -45,7 +46,7 @@ Supported formats:
   jwt         JSON Web Tokens (decoded header + payload)
   base64      Base64-encoded data (decoded, inner format detected)
   urlencoded  URL-encoded key=value pairs
-  log         Log lines with timestamps and levels
+  log         Log lines with timestamps and levels (embedded JSON formatted)
 
 Examples:
   curl -s https://api.example.com/data | ppp

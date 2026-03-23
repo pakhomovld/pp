@@ -17,7 +17,7 @@ detector returns a confidence score; the highest confidence wins.
 .BR \-f ", " \-\-format " " \fIfmt\fR
 Force a specific format, skipping auto-detection.
 Valid values:
-.BR json ", " yaml ", " csv ", " tsv ", " xml ", " html ", "
+.BR json ", " ndjson ", " yaml ", " csv ", " tsv ", " xml ", " html ", "
 .BR toml ", " jwt ", " base64 ", " urlencoded ", " log .
 .TP
 .B \-\-inspect
@@ -44,6 +44,7 @@ Print help and exit.
 .TS
 l l.
 json	JSON objects and arrays
+ndjson	Newline-delimited JSON (one object per line)
 yaml	YAML documents
 csv	Comma-separated values
 tsv	Tab-separated values
@@ -53,22 +54,23 @@ toml	TOML configuration files
 jwt	JSON Web Tokens (decoded header + payload)
 base64	Base64-encoded data (decoded, inner format detected)
 urlencoded	URL-encoded key=value pairs
-log	Log lines with timestamps and levels
+log	Log lines with timestamps and levels (embedded JSON formatted)
 .TE
 .SH DETECTION ORDER
 Detectors run in this priority order. On a tie, the earlier detector wins.
 .PP
 .nf
 1. JWT \(em three dot-separated base64url segments
-2. JSON \(em starts with { or [, valid parse
-3. XML/HTML \(em starts with <
-4. YAML \(em --- or key: value patterns
-5. TOML \(em [section] + key = value
-6. CSV/TSV \(em consistent delimiter counts
-7. URL-encoded \(em key=value&key=value
-8. Log lines \(em timestamp + level patterns
-9. Base64 \(em valid charset, decodes to UTF-8
-10. Plain text \(em fallback passthrough
+2. NDJSON \(em multiple { lines, each valid JSON
+3. JSON \(em starts with { or [, valid parse
+4. XML/HTML \(em starts with <
+5. YAML \(em --- or key: value patterns
+6. TOML \(em [section] + key = value
+7. CSV/TSV \(em consistent delimiter counts
+8. URL-encoded \(em key=value&key=value
+9. Log lines \(em timestamp + level patterns
+10. Base64 \(em valid charset, decodes to UTF-8
+11. Plain text \(em fallback passthrough
 .fi
 .SH EXAMPLES
 Pretty-print a JSON API response:

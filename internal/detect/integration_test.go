@@ -37,6 +37,10 @@ func TestDetect_FormatPriority(t *testing.T) {
 		// URL-encoded detection.
 		{"url-encoded", "name=Alice&age=30&city=NYC", URLEncode},
 
+		// NDJSON must win over JSON for multi-line JSON objects.
+		{"ndjson", "{\"a\":1}\n{\"b\":2}\n{\"c\":3}", NDJSON},
+		{"single json not ndjson", `{"a":1}`, JSON},
+
 		// Fallbacks.
 		{"plain text", "just some text", Plain},
 		{"empty", "", Plain},

@@ -2,6 +2,7 @@ package format
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io"
 	"regexp"
@@ -20,18 +21,34 @@ var (
 type LogFormatter struct{}
 
 func (f *LogFormatter) Format(w io.Writer, r io.Reader, theme *color.Theme) error {
-	if theme == nil {
-		_, err := io.Copy(w, r)
-		return err
-	}
-
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		colored := colorizeLogLine(line, theme)
-		if _, err := fmt.Fprintln(w, colored); err != nil {
+
+		// Try to extract and format embedded JSON.
+		if strings.ContainsAny(line, "{[") {
+			if prefix, v, found := extractJSON(line); found {
+				prefix = strings.TrimRight(prefix, " \t")
+				if theme != nil {
+					prefix = colorizeLogLine(prefix, theme)
+				}
+				if _, err := fmt.Fprintln(w, prefix); err != nil {
+					return err
+				}
+				out := formatValue(v, 1, theme)
+				if _, err := fmt.Fprintln(w, out); err != nil {
+					return err
+				}
+				continue
+			}
+		}
+
+		if theme != nil {
+			line = colorizeLogLine(line, theme)
+		}
+		if _, err := fmt.Fprintln(w, line); err != nil {
 			return err
 		}
 	}
@@ -59,6 +76,22 @@ func colorizeLogLine(line string, theme *color.Theme) string {
 	}
 
 	return result
+}
+
+// extractJSON finds the first valid JSON object or array embedded in a line.
+// Returns the prefix before the JSON, the parsed value, and whether JSON was found.
+func extractJSON(line string) (prefix string, v any, found bool) {
+	for i, ch := range line {
+		if ch != '{' && ch != '[' {
+			continue
+		}
+		candidate := line[i:]
+		var parsed any
+		if err := json.Unmarshal([]byte(candidate), &parsed); err == nil {
+			return line[:i], parsed, true
+		}
+	}
+	return "", nil, false
 }
 
 func colorizeLevel(level string, theme *color.Theme) string {
