@@ -16,6 +16,46 @@ type Config struct {
 	Version     bool
 }
 
+const helpText = `ppp — universal pipe pretty-printer
+
+Usage:
+  <command> | ppp [flags]
+
+Reads from stdin, auto-detects the data format, and pretty-prints
+it with syntax highlighting. No flags needed.
+
+Flags:
+  -f, --format <fmt>   Force a specific format (skip auto-detection)
+      --no-color       Disable colored output
+  -v, --version        Print version
+  -h, --help           Print this help
+
+Supported formats:
+  json        JSON objects and arrays
+  yaml        YAML documents
+  csv         Comma-separated values
+  tsv         Tab-separated values
+  xml         XML documents
+  html        HTML documents
+  toml        TOML configuration
+  jwt         JSON Web Tokens (decoded header + payload)
+  base64      Base64-encoded data (decoded, inner format detected)
+  urlencoded  URL-encoded key=value pairs
+  log         Log lines with timestamps and levels
+
+Examples:
+  curl -s https://api.example.com/data | ppp
+  cat config.yaml | ppp
+  echo '{"name":"Alice"}' | ppp
+  docker logs myapp | ppp
+  echo 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.sig' | ppp
+  cat data.csv | ppp -f csv
+
+Color is automatically disabled when stdout is not a terminal
+or the NO_COLOR environment variable is set.
+
+More info: https://github.com/pakhomovld/pp`
+
 // ParseFlags parses CLI arguments.
 func ParseFlags() Config {
 	var cfg Config
@@ -27,10 +67,7 @@ func ParseFlags() Config {
 	flag.BoolVar(&cfg.Version, "v", false, "print version (shorthand)")
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "ppp — universal pipe pretty-printer\n\n")
-		fmt.Fprintf(os.Stderr, "Usage: <command> | ppp [flags]\n\n")
-		fmt.Fprintf(os.Stderr, "Flags:\n")
-		flag.PrintDefaults()
+		fmt.Fprintln(os.Stderr, helpText)
 	}
 
 	flag.Parse()

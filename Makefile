@@ -1,4 +1,4 @@
-.PHONY: build test lint clean install
+.PHONY: build test lint clean install uninstall
 
 build:
 	go build -o ppp .
@@ -16,3 +16,8 @@ clean:
 
 install: build
 	cp ppp /usr/local/bin/ppp
+	cp ppp.1 /usr/local/share/man/man1/ppp.1
+
+uninstall:
+	rm -f /usr/local/bin/ppp
+	rm -f /usr/local/share/man/man1/ppp.1

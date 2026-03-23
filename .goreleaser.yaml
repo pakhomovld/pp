@@ -18,6 +18,8 @@ builds:
 archives:
   - formats: [tar.gz]
     name_template: "ppp_{{ .Os }}_{{ .Arch }}"
+    files:
+      - ppp.1
     format_overrides:
       - goos: windows
         formats: [zip]
@@ -43,5 +45,6 @@ brews:
     license: MIT
     install: |
       bin.install "ppp"
+      man1.install "ppp.1"
     test: |
       assert_match "ppp version", shell_output("#{bin}/ppp --version")

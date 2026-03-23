@@ -1,0 +1,113 @@
+.TH PPP 1 "2026-03-23" "ppp" "User Commands"
+.SH NAME
+ppp \- universal pipe pretty-printer
+.SH SYNOPSIS
+.B <command> | ppp
+.RI [ flags ]
+.SH DESCRIPTION
+.B ppp
+reads from stdin, auto-detects the data format, and pretty-prints it with
+syntax highlighting. No flags needed \(em just pipe to
+.BR ppp .
+.PP
+The first 8KB of input is sampled to determine the format. Each built-in
+detector returns a confidence score; the highest confidence wins.
+.SH OPTIONS
+.TP
+.BR \-f ", " \-\-format " " \fIfmt\fR
+Force a specific format, skipping auto-detection.
+Valid values:
+.BR json ", " yaml ", " csv ", " tsv ", " xml ", " html ", "
+.BR toml ", " jwt ", " base64 ", " urlencoded ", " log .
+.TP
+.B \-\-no\-color
+Disable colored output.
+.TP
+.BR \-v ", " \-\-version
+Print version and exit.
+.TP
+.BR \-h ", " \-\-help
+Print help and exit.
+.SH FORMATS
+.TS
+l l.
+json	JSON objects and arrays
+yaml	YAML documents
+csv	Comma-separated values
+tsv	Tab-separated values
+xml	XML documents
+html	HTML documents
+toml	TOML configuration files
+jwt	JSON Web Tokens (decoded header + payload)
+base64	Base64-encoded data (decoded, inner format detected)
+urlencoded	URL-encoded key=value pairs
+log	Log lines with timestamps and levels
+.TE
+.SH DETECTION ORDER
+Detectors run in this priority order. On a tie, the earlier detector wins.
+.PP
+.nf
+1. JWT \(em three dot-separated base64url segments
+2. JSON \(em starts with { or [, valid parse
+3. XML/HTML \(em starts with <
+4. YAML \(em --- or key: value patterns
+5. TOML \(em [section] + key = value
+6. CSV/TSV \(em consistent delimiter counts
+7. URL-encoded \(em key=value&key=value
+8. Log lines \(em timestamp + level patterns
+9. Base64 \(em valid charset, decodes to UTF-8
+10. Plain text \(em fallback passthrough
+.fi
+.SH EXAMPLES
+Pretty-print a JSON API response:
+.PP
+.nf
+curl -s https://api.example.com/users | ppp
+.fi
+.PP
+Pretty-print a YAML config:
+.PP
+.nf
+cat config.yaml | ppp
+.fi
+.PP
+Force CSV format:
+.PP
+.nf
+cat data.csv | ppp -f csv
+.fi
+.PP
+Decode a JWT:
+.PP
+.nf
+echo 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.sig' | ppp
+.fi
+.PP
+Colorize Docker logs:
+.PP
+.nf
+docker logs myapp | ppp
+.fi
+.SH ENVIRONMENT
+.TP
+.B NO_COLOR
+If set, disables colored output (see https://no-color.org).
+.SH COLOR
+Color is automatically disabled when stdout is not a terminal (e.g., piping
+to a file or another command), or when the
+.B NO_COLOR
+environment variable is set.
+.SH EXIT STATUS
+.TP
+.B 0
+Success.
+.TP
+.B 1
+An error occurred reading stdin or formatting output.
+.SH HOMEPAGE
+.UR https://github.com/pakhomovld/pp
+.UE
+.SH LICENSE
+MIT
+.SH AUTHOR
+Leonid Pakhomov
