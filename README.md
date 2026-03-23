@@ -8,6 +8,8 @@ Universal pipe pretty-printer. One command, any format.
 
 `ppp` reads from stdin, auto-detects the data format, and pretty-prints it with syntax highlighting. No flags needed.
 
+![ppp demo](demo/hero.gif)
+
 ## Supported Formats
 
 | Format | Detection | Output |
@@ -47,56 +49,19 @@ The Go module is named `pp` but the binary it produces is `ppp`.
 
 **JSON** — auto-detected, indented, colored:
 
-```sh
-curl -s https://api.example.com/users | ppp
-```
-
-```
-{
-  "name": "Alice",
-  "active": true,
-  "age": 30
-}
-```
+![JSON demo](demo/json.gif)
 
 **CSV** — auto-detected, rendered as aligned table:
 
-```sh
-cat data.csv | ppp
-```
-
-```
-  name     age  city
-  ──────────────────
-  Alice    30   NYC
-  Bob      25   LA
-```
+![CSV demo](demo/csv.gif)
 
 **JWT** — decoded header and payload:
 
-```sh
-echo 'eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiJ9.signature' | ppp
-```
-
-```
-Header:
-{
-  "alg": "HS256"
-}
-
-Payload:
-{
-  "name": "John"
-}
-
-Signature: [not verified]
-```
+![JWT demo](demo/jwt.gif)
 
 **Logs** — timestamps dimmed, levels colorized:
 
-```sh
-docker logs myapp | ppp
-```
+![Logs demo](demo/logs.gif)
 
 **Base64** — decoded, then inner format detected:
 

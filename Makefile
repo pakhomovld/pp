@@ -1,4 +1,4 @@
-.PHONY: build test lint clean install uninstall
+.PHONY: build test lint clean install uninstall demo
 
 build:
 	go build -o ppp .
@@ -21,3 +21,6 @@ install: build
 uninstall:
 	rm -f /usr/local/bin/ppp
 	rm -f /usr/local/share/man/man1/ppp.1
+
+demo: build
+	@for tape in demo/*.tape; do echo "Recording $$tape..."; vhs $$tape; done
