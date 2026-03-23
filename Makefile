@@ -1,7 +1,7 @@
 .PHONY: build test lint clean install
 
 build:
-	go build -o pp .
+	go build -o ppp .
 
 test:
 	go test ./... -count=1 -race
@@ -12,7 +12,7 @@ lint:
 	@test -z "$$(gofmt -l .)" || (echo "Run gofmt" && exit 1)
 
 clean:
-	rm -f pp
+	rm -f ppp
 
 install: build
-	cp pp /usr/local/bin/pp
+	cp ppp /usr/local/bin/ppp

@@ -1,12 +1,12 @@
-# pp
+# ppp
 
 Universal pipe pretty-printer. One command, any format.
 
 ```
-<command> | pp
+<command> | ppp
 ```
 
-`pp` reads from stdin, auto-detects the data format, and pretty-prints it with syntax highlighting. No flags needed.
+`ppp` reads from stdin, auto-detects the data format, and pretty-prints it with syntax highlighting. No flags needed.
 
 ## Supported Formats
 
@@ -30,7 +30,7 @@ Unknown formats pass through unchanged.
 **Homebrew:**
 
 ```sh
-brew install pakhomovld/tap/pp
+brew install pakhomovld/tap/ppp
 ```
 
 **Go:**
@@ -39,6 +39,8 @@ brew install pakhomovld/tap/pp
 go install github.com/pakhomovld/pp@latest
 ```
 
+The Go module is named `pp` but the binary it produces is `ppp`.
+
 **Binary:** Download from [GitHub Releases](https://github.com/pakhomovld/pp/releases).
 
 ## Examples
@@ -46,7 +48,7 @@ go install github.com/pakhomovld/pp@latest
 **JSON** — auto-detected, indented, colored:
 
 ```sh
-curl -s https://api.example.com/users | pp
+curl -s https://api.example.com/users | ppp
 ```
 
 ```
@@ -60,7 +62,7 @@ curl -s https://api.example.com/users | pp
 **CSV** — auto-detected, rendered as aligned table:
 
 ```sh
-cat data.csv | pp
+cat data.csv | ppp
 ```
 
 ```
@@ -73,7 +75,7 @@ cat data.csv | pp
 **JWT** — decoded header and payload:
 
 ```sh
-echo 'eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiJ9.signature' | pp
+echo 'eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiJ9.signature' | ppp
 ```
 
 ```
@@ -93,13 +95,13 @@ Signature: [not verified]
 **Logs** — timestamps dimmed, levels colorized:
 
 ```sh
-docker logs myapp | pp
+docker logs myapp | ppp
 ```
 
 **Base64** — decoded, then inner format detected:
 
 ```sh
-echo '{"secret":"found"}' | base64 | pp
+echo '{"secret":"found"}' | base64 | ppp
 ```
 
 ```
@@ -112,7 +114,7 @@ echo '{"secret":"found"}' | base64 | pp
 **URL-encoded** — decoded and displayed as table:
 
 ```sh
-echo 'user=john%40example.com&token=abc&active=true' | pp
+echo 'user=john%40example.com&token=abc&active=true' | ppp
 ```
 
 ```
@@ -145,11 +147,11 @@ Color is automatically disabled when:
 | `xmllint` | XML only. No color. |
 | `base64 -d` | Decodes but doesn't format the result. |
 
-`pp` replaces all of them with one command. You don't need to know the format — just pipe to `pp`.
+`ppp` replaces all of them with one command. You don't need to know the format — just pipe to `ppp`.
 
 ## How Detection Works
 
-`pp` reads the first 8KB of stdin and runs format detectors in priority order:
+`ppp` reads the first 8KB of stdin and runs format detectors in priority order:
 
 1. **JWT** — three dot-separated base64url segments
 2. **JSON** — starts with `{` or `[`, valid parse
@@ -169,7 +171,7 @@ Each detector returns a confidence score (High/Medium/Low/None). Highest confide
 ```sh
 git clone https://github.com/pakhomovld/pp
 cd pp
-make build     # produces ./pp
+make build     # produces ./ppp
 make test      # runs all tests
 make install   # copies to /usr/local/bin
 ```

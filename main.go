@@ -17,7 +17,7 @@ func main() {
 	cfg := cmd.ParseFlags()
 
 	if cfg.Version {
-		fmt.Printf("pp version %s\n", cmd.Version)
+		fmt.Printf("ppp version %s\n", cmd.Version)
 		os.Exit(0)
 	}
 
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	if err := run(cfg); err != nil {
-		fmt.Fprintf(os.Stderr, "pp: %v\n", err)
+		fmt.Fprintf(os.Stderr, "ppp: %v\n", err)
 		os.Exit(1)
 	}
 }

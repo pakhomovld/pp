@@ -2,7 +2,7 @@ version: 2
 
 builds:
   - main: .
-    binary: pp
+    binary: ppp
     env:
       - CGO_ENABLED=0
     goos:
@@ -17,7 +17,7 @@ builds:
 
 archives:
   - formats: [tar.gz]
-    name_template: "pp_{{ .Os }}_{{ .Arch }}"
+    name_template: "ppp_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
         formats: [zip]
@@ -41,6 +41,6 @@ brews:
     description: Universal pipe pretty-printer. Auto-detects format, adds color.
     license: MIT
     install: |
-      bin.install "pp"
+      bin.install "ppp"
     test: |
-      assert_match "pp version", shell_output("#{bin}/pp --version")
+      assert_match "ppp version", shell_output("#{bin}/ppp --version")

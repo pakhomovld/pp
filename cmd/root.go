@@ -27,8 +27,8 @@ func ParseFlags() Config {
 	flag.BoolVar(&cfg.Version, "v", false, "print version (shorthand)")
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "pp — universal pipe pretty-printer\n\n")
-		fmt.Fprintf(os.Stderr, "Usage: <command> | pp [flags]\n\n")
+		fmt.Fprintf(os.Stderr, "ppp — universal pipe pretty-printer\n\n")
+		fmt.Fprintf(os.Stderr, "Usage: <command> | ppp [flags]\n\n")
 		fmt.Fprintf(os.Stderr, "Flags:\n")
 		flag.PrintDefaults()
 	}
