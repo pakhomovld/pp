@@ -21,6 +21,8 @@ Universal pipe pretty-printer. One command, any format.
 | XML | `<` prefix, `<?xml` declaration | Indented + colored tags |
 | HTML | `<!DOCTYPE html>` or `<html>` | Indented + colored |
 | TOML | `[section]` + `key = value` | Colored sections/keys |
+| SQL | `SELECT`, `INSERT`, `CREATE`, etc. | Keywords uppercased + indented |
+| HCL | Terraform block headers + `key = value` | Colored keywords/values |
 | Log lines | Timestamps + level patterns | Colorized levels + embedded JSON formatted |
 | JWT | Three base64url segments with `"alg"` header | Decoded header + payload |
 | Base64 | Valid charset + decodable to UTF-8 | Decoded + inner format detected |
@@ -145,11 +147,13 @@ Color is automatically disabled when:
 4. **XML/HTML** — starts with `<`
 5. **YAML** — `---` or `key: value` patterns
 6. **TOML** — `[section]` headers + `key = value`
-7. **CSV/TSV** — consistent delimiter counts across lines
-8. **URL-encoded** — `key=value&key=value` pattern
-9. **Log lines** — timestamp and level patterns
-10. **Base64** — valid charset, decodes to UTF-8
-11. **Plain text** — fallback, passes through unchanged
+7. **HCL** — Terraform block headers + `key = value`
+8. **CSV/TSV** — consistent delimiter counts across lines
+9. **SQL** — statement keywords (`SELECT`, `INSERT`, `CREATE`, etc.)
+10. **URL-encoded** — `key=value&key=value` pattern
+11. **Log lines** — timestamp and level patterns
+12. **Base64** — valid charset, decodes to UTF-8
+13. **Plain text** — fallback, passes through unchanged
 
 Each detector returns a confidence score (High/Medium/Low/None). Highest confidence wins. On ties, earlier detector wins.
 
@@ -169,8 +173,6 @@ Use `--inspect` to see what `ppp` detected and how confident it is.
 
 - Protobuf (with `.proto` schema)
 - MessagePack
-- HCL (Terraform configs)
-- SQL (query formatting)
 
 ## Build from Source
 

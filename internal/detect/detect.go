@@ -15,6 +15,8 @@ const (
 	HTML      Format = "html"
 	JWT       Format = "jwt"
 	Base64    Format = "base64"
+	SQL       Format = "sql"
+	HCL       Format = "hcl"
 	URLEncode Format = "urlencoded"
 	LogLine   Format = "log"
 	Markdown  Format = "markdown"
@@ -49,7 +51,9 @@ func Detect(sample []byte) Result {
 		&XMLDetector{},
 		&YAMLDetector{},
 		&TOMLDetector{},
+		&HCLDetector{},
 		&CSVDetector{},
+		&SQLDetector{},
 		&URLDetector{},
 		&LogDetector{},
 		&Base64Detector{},

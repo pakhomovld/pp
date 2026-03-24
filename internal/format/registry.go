@@ -17,6 +17,10 @@ func ForFormat(f detect.Format) Formatter {
 		return &CSVFormatter{Dialect: detect.TSV}
 	case detect.TOML:
 		return &TOMLFormatter{}
+	case detect.SQL:
+		return &SQLFormatter{}
+	case detect.HCL:
+		return &HCLFormatter{}
 	case detect.XML, detect.HTML:
 		return &XMLFormatter{}
 	case detect.LogLine:

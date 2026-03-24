@@ -41,6 +41,13 @@ func TestDetect_FormatPriority(t *testing.T) {
 		{"ndjson", "{\"a\":1}\n{\"b\":2}\n{\"c\":3}", NDJSON},
 		{"single json not ndjson", `{"a":1}`, JSON},
 
+		// SQL detection.
+		{"sql select", "SELECT id, name FROM users WHERE active = true ORDER BY name", SQL},
+		{"sql create", "CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(255) NOT NULL)", SQL},
+
+		// HCL detection.
+		{"hcl terraform", "resource \"aws_instance\" \"web\" {\n  ami = \"ami-123\"\n}\n\nresource \"aws_s3_bucket\" \"data\" {\n  bucket = \"my-bucket\"\n}", HCL},
+
 		// Fallbacks.
 		{"plain text", "just some text", Plain},
 		{"empty", "", Plain},

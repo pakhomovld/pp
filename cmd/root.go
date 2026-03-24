@@ -46,6 +46,8 @@ Supported formats:
   jwt         JSON Web Tokens (decoded header + payload)
   base64      Base64-encoded data (decoded, inner format detected)
   urlencoded  URL-encoded key=value pairs
+  sql         SQL queries and statements
+  hcl         HCL/Terraform configuration
   log         Log lines with timestamps and levels (embedded JSON formatted)
 
 Examples:
